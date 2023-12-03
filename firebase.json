@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/rest-countries-api-with-color-theme-switcher-master",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

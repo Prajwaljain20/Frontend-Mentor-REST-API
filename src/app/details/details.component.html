@@ -1,0 +1,33 @@
+<div *ngIf="!loading else load">
+    <div class="back" (click)="goBack()"><span class="arrow">&larr;</span> Back</div>
+    <div class="container">
+        <div class="flag" [ngStyle]="{'background' : image.svg}"></div>
+        <div class="details">
+            <div class="grid1">
+                <h2 [textContent]="card.name.common"></h2>
+                <h5>Native Name: <span [textContent]="card.altSpellings[1]"></span></h5>
+                <h5>Population: <span [textContent]="card.population"></span></h5>
+                <h5>Region: <span [textContent]="card.region"></span></h5>
+                <h5>Sub Region: <span [textContent]="card.subregion"></span></h5>
+                <h5>Capital: <span [textContent]="card.capital"></span></h5>
+            </div>
+            <div class="grid2">
+                <h5>Top Level Domain: <span [textContent]="(card.tld).join(', ')"></span></h5>
+                <h5>Currencies: <span [textContent]="currencies.join(', ')"></span></h5>
+                <h5>Languages: <span [textContent]="languages.join(', ')"></span></h5>
+            </div>
+            <div class="border" *ngIf="!borderLoading else loadBorder">
+                <h5>Border Countries: </h5>
+                <div class="country" *ngFor="let country of borderCountries">
+                    <span class="card" [textContent]="country.name.common" [routerLink]="['/card', country.cca3]"></span>
+                </div>
+            </div>
+            <ng-template #loadBorder>
+                <loader></loader>
+            </ng-template>
+        </div>
+    </div>
+</div>
+<ng-template #load>
+    <loader></loader>
+</ng-template>

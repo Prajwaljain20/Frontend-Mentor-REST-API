@@ -1,0 +1,12 @@
+<div class="container">
+    <h1 routerLink="/">Where in the world?</h1>
+    <ng-container class="icon" *ngIf="nightMode === 'dark-mode' then dark else light"></ng-container>
+    <ng-template #light>
+        <div class="icon dark" (click)="switchMode()"></div>
+        <p (click)="switchMode()">Dark Mode</p>
+    </ng-template>
+    <ng-template #dark>
+        <div class="icon light" (click)="switchMode()"></div>
+        <p (click)="switchMode()">Light Mode</p>
+    </ng-template>
+</div>

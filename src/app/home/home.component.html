@@ -1,0 +1,27 @@
+<div *ngIf="!loading else load">
+<div class="text-fields">
+    <input type="text" class="search textbox" placeholder="Search for a country..." #search (input)="onSearchInput()">
+    <div class="search-icon"></div>
+    <div class="search-list">
+        <div *ngFor="let list of searchList; index as number">
+            <h4 [textContent]="list.name.common" [routerLink]="['card', list.cca3]"></h4>
+            <hr *ngIf="number !== searchList.length - 1" />
+        </div>
+    </div>
+    <select class="search filter" #select (change)="sortData()">
+        <option value="" selected disabled hidden>Filter By Region</option>
+        <option *ngFor="let filter of filters" [value]="filter" [textContent]="filter"></option>
+    </select>
+</div>
+<div class="container" *ngIf="cardObj.length">
+    <app-card *ngFor="let card of filteredData" [cards]="card" (click)="goToCard(card)"></app-card>
+</div>
+<div class="pagination-container">
+    <button class="arrow" (click)="changePage('previous')" [disabled]="current === '1'"><</button>
+    <div class="numbers" [textContent]="current + ' of ' + pages"></div>
+    <button class="arrow" [textContent]="'>'" (click)="changePage('next')" [disabled]="current === pages.toString()"></button>
+</div>
+</div>
+<ng-template #load>
+    <loader></loader>
+</ng-template>
