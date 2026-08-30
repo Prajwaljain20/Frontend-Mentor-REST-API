@@ -12,7 +12,7 @@ export class DataService {
 
   nightMode: BehaviorSubject<string> = new BehaviorSubject<string>('light-mode');
   nightMode$ = this.nightMode.asObservable();
-  url: string = 'https://restcountries.com/v3.1/';
+  url: string = 'https://api.restcountries.com/countries/v5/';
 
   constructor(private http: HttpClient) {
     this.nightMode.next(localStorage.getItem('theme') || 'light-mode');
