@@ -15,6 +15,6 @@ export class CardComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.image = `url(${this.cards.flags.svg}) no-repeat center / cover`;
+    this.image = `url(${this.cards.flag.url_svg}) no-repeat center / cover`;
   }
 }

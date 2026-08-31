@@ -1,19 +1,22 @@
 export interface IDetailsCard {
-    name: {common: string},
+    names: {common: string},
     population: number,
-    currencies: {[key: string]: {name: string}},
+    currencies: {name: string}[],
     region: string,
     subregion: string,
-    capital: string[],
-    languages: Object,
-    tld: string[],
+    capitals: {name: string}[],
+    languages: {name: string}[],
+    tlds: string[],
     borders: string[],
-    flags: IFlag,
-    altSpellings: string[]
+    flag: IFlag,
 };
 
 export interface IFlag {
-    png: string,
-    svg: string,
-    alt: string
+    url_png: string,
+    url_svg: string,
+    description: string
 };
+
+export interface IDetailResponse {
+    data: {objects : IDetailsCard[]}
+}
