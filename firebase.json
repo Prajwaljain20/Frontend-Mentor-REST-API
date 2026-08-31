@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/rest-countries-api-with-color-theme-switcher-master",
+    "public": "out",
     "ignore": [
       "firebase.json",
       "**/.*",

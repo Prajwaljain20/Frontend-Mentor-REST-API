@@ -1,15 +1,19 @@
 import { IFlag } from "./details-card-interface";
 
 export interface ICard {
-    cca3: string,
-    name: {common: string},
+    codes: {ccn3: string},
+    names: {common: string},
     population: number,
     region: string,
-    capital: string[],
-    flags: IFlag
+    capitals: {name: string}[],
+    flag: IFlag
 };
 
 export interface ISearch {
     name: {common: string},
     cca3: string
+}
+
+export interface ICardResponse {
+  data: {objects: ICard[]};
 }

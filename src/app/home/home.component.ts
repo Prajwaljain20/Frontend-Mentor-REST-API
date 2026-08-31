@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToCard(card: ICard): void {
-    this.router.navigate(['card', card.cca3])
+    this.router.navigate(['card', card.codes.ccn3])
   }
 
   changePage(action: string): void {
@@ -69,11 +69,11 @@ export class HomeComponent implements OnInit {
     if (searchKeyword.length > 0) {
       this.searchList = this.cardObj.filter(card => {
         return (
-          (card.name.common)?.toLowerCase().includes(searchKeyword) ||
-          (card.capital[0])?.toLowerCase().includes(searchKeyword) ||
+          (card.names.common)?.toLowerCase().includes(searchKeyword) ||
+          card.capitals.length > 0 && (card.capitals[0].name)?.toLowerCase().includes(searchKeyword) ||
           (card.region)?.toLowerCase().includes(searchKeyword)
         );
-      }).map(card => ({name: card.name, cca3: card.cca3}));
+      }).map(card => ({name: card.names, cca3: card.codes.ccn3}));
     } else {
       this.searchList = [];
     }

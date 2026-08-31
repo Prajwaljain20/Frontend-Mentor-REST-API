@@ -13,9 +13,9 @@ import { IBorder } from '../models/border-interface';
 export class DetailsComponent implements OnInit {
 
   card!: IDetailsCard;
-  currencies: string[] = [];
+  currencies: string = '';
   languages: string[] = [];
-  image: IFlag = {svg: '',png: '', alt: ''};
+  image: IFlag = {url_svg: '',url_png: '', description: ''};
   borderCountries: IBorder[] = [];
   loading = false;
   borderLoading = false;
@@ -26,12 +26,10 @@ export class DetailsComponent implements OnInit {
       this.loading = true;
       this.dataService.getDataByCode(res.get('id')!).subscribe(response=> {
         this.card = response[0];
-        this.image.svg = `url(${this.card.flags.svg}) no-repeat center / contain`;
-        this.image.alt = this.card.flags.alt;
-        this.languages = Object.values(this.card.languages);
-        const currency = Object.keys(this.card.currencies);
-        this.currencies = [];
-        currency.forEach(val => this.currencies.push(this.card.currencies[val].name));
+        this.image.url_svg = `url(${this.card.flag.url_svg}) no-repeat center / contain`;
+        this.image.description = this.card.flag.description;
+        this.languages = this.card.languages.map(language => language.name);
+        this.currencies = this.card.currencies[0].name;
         this.borderCountries = [];
         this.card.borders.forEach(border => {
           this.borderLoading = true;

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { IDetailsCard } from '../models/details-card-interface';
-import { IBorder } from '../models/border-interface';
-import { ICard } from '../models/card-interface';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { IDetailResponse, IDetailsCard } from '../models/details-card-interface';
+import { IBorder, IBorderResponse } from '../models/border-interface';
+import { ICard, ICardResponse } from '../models/card-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class DataService {
 
   nightMode: BehaviorSubject<string> = new BehaviorSubject<string>('light-mode');
   nightMode$ = this.nightMode.asObservable();
-  url: string = 'https://api.restcountries.com/countries/v5/';
+  url: string = 'https://api.restcountries.com/countries/v5';
 
   constructor(private http: HttpClient) {
     this.nightMode.next(localStorage.getItem('theme') || 'light-mode');
@@ -25,14 +25,14 @@ export class DataService {
   }
 
   getData() {
-    return this.http.get(`${this.url}all?fields=name,capital,population,region,flags,cca3`) as Observable<ICard[]>;
+    return this.http.get<ICardResponse>(`${this.url}?response_fields=codes.ccn3,names.common,population,region,capitals.name,flag.url_svg,flag.url_png,flag.description&limit=100`).pipe(map(res => res.data.objects)) as Observable<ICard[]>;
   }
 
   getDataByCode(code: string) {
-    return this.http.get(`${this.url}alpha?codes=${code}&fields=name,capital,currencies,languages,population,region,subregion,tld,flags,borders,altSpellings`) as Observable<IDetailsCard[]>;
+    return this.http.get<IDetailResponse>(`${this.url}/codes.ccn3/${code}?response_fields=tlds,names.common,capitals.name,currencies.name,flag.url_svg,flag.url_png,flag.description,languages.name,population,region,subregion,borders`).pipe(map(res=> res.data.objects)) as Observable<IDetailsCard[]>;
   }
 
   getBorderByCode(code: string) {
-    return this.http.get(`${this.url}alpha?codes=${code}&fields=name,cca3`) as Observable<IBorder[]>;
+    return this.http.get<IBorderResponse>(`${this.url}/codes.alpha_3/${code}?response_fields=names.common,codes.ccn3`).pipe(map(res=> res.data.objects)) as Observable<IBorder[]>;
   }
 }
